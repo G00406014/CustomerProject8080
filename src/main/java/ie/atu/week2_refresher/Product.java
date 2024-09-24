@@ -15,10 +15,10 @@ import jakarta.validation.constraints.NotNull;
 public class Product {
     private Long id;
 
-    @NotBlank(message = "fill in this")
+    @NotBlank(message = "fill in name")
     private String name;
 
     @NotNull(message = "Price is mandatory")
-    @Min(value = 0, message = "Price must be positive")
+    @Min(value = 0, message = "Price must be higher than 0")
     private double price;
 }

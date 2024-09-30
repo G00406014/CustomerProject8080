@@ -12,7 +12,7 @@ public interface OtherService {
     @PostMapping("/submitProduct")
     String sendProductDetails(@RequestBody Product product);
 
-    // New method to submit product to the second microservice
+
     @PostMapping("/products")
     Product submitProductToService2(@RequestBody Product product);
 }

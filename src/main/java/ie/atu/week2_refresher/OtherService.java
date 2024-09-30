@@ -1,13 +1,18 @@
 package ie.atu.week2_refresher;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
-
-@FeignClient(name = "external - Service" ,url = "http://loclahost:8081")
+@FeignClient(name = "product-service-2", url = "http://localhost:8081")
 public interface OtherService {
 
     @GetMapping("/getDetails")
-    public String externalDetails();
+    CustomerDetails getDetails();
+
+    @PostMapping("/submitProduct")
+    String sendProductDetails(@RequestBody Product product);
+
+    // New method to submit product to the second microservice
+    @PostMapping("/products")
+    Product submitProductToService2(@RequestBody Product product);
 }

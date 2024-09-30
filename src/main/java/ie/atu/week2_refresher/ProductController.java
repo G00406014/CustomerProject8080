@@ -1,38 +1,41 @@
 package ie.atu.week2_refresher;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/products")
-@ResponseStatus(HttpStatus.CREATED)
-
 public class ProductController {
-
     private final ProductService productService;
+    private final OtherService otherService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, OtherService otherService) {
         this.productService = productService;
+        this.otherService = otherService;
     }
+
+    @PostMapping("/confirm")
+    public ResponseEntity<String> confirmDetails() {
+        CustomerDetails details = otherService.getDetails();
+        String message = "Name: " + details.getName() + ", Email: " + details.getEmail();
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
     @GetMapping
-    public List<Product> getProductList() {
-        return productService.getProductList();
+    public ResponseEntity<List<Product>> getProductList() {
+        List<Product> products = productService.getProductList();
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
+
     @PostMapping
-    public Product addProduct(@Valid @RequestBody Product product) {
-        return productService.addProduct(product);
-    }
-    @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @Valid @RequestBody Product product) {
-        return productService.updateProduct(id, product);
-    }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Product> addProduct(@Valid @RequestBody Product product) {
+        Product addedProduct = productService.addProduct(product);
+        return new ResponseEntity<>(addedProduct, HttpStatus.CREATED);
     }
 }

@@ -10,7 +10,7 @@ public class ProductService {
     private final List<Product> productList = new ArrayList<>();
 
     public List<Product> getProductList() {
-        return productList.isEmpty() ? List.of() : productList; // return an empty list if no products
+        return productList.isEmpty() ? List.of() : productList;
     }
 
     public Product addProduct(Product product) {

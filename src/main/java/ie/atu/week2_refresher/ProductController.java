@@ -5,10 +5,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 @RestController
 @RequestMapping("/products")
+@ResponseStatus(HttpStatus.CREATED)
+
 public class ProductController {
+
     private final ProductService productService;
+
     @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
